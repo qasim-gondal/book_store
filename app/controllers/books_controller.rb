@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[ show edit update destroy ]
-
+  before_action :set_book, only: %i[ show edit update destroy library ]
+before_action :authenticate_user!
   # GET /books or /books.json
   def index
     @books = Book.all
@@ -12,7 +12,7 @@ class BooksController < ApplicationController
 
   # GET /books/new
   def new
-    @book = Book.new
+    @book = current_user.books.build
   end
 
   # GET /books/1/edit
@@ -21,7 +21,7 @@ class BooksController < ApplicationController
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.build(book_params)
 
     respond_to do |format|
       if @book.save
@@ -55,6 +55,19 @@ class BooksController < ApplicationController
       format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+  def library
+    type = params[:type]
+    if type == "add"   
+      current_user.library_additions << @book
+      redirect_to library_index_path, notice: "#{@book.title} was added to your library "
+      elsif type == "remove"
+        current_user.library_additions.delete(@book)
+        redirect_to root_path(@book), notice: "#{@book.title} was removed from your library"
+      else
+        redirect_to book_path(@book) , notice: "Try one again"
+      end
+
   end
 
   private

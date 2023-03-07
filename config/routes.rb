@@ -1,9 +1,11 @@
-Rails.application.routes.draw do
- devise_for :users
-  resources :books  
+Rails.application.routes.draw do  
+  resources :books do 
+    member do
+put "add" , to: "books#library"
+put "remove" , to: "books#library"
+    end  
+  end
+ devise_for :users 
+  resources :library
   root 'books#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end

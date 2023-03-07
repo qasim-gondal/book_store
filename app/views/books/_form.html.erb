@@ -1,3 +1,4 @@
+<div class="index">
 <%= form_with(model: book) do |form| %>
   <% if book.errors.any? %>
     <div style="color: red">
@@ -30,3 +31,4 @@
     <%= form.submit %>
   </div>
 <% end %>
+</div>
