@@ -1,23 +1,16 @@
 <div class="index">
-<div class="container">
-<p style="color: green"><%= notice %>  </p>
+<p style="color: green"><%= notice %></p>
+
 <h1>Books</h1>
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Book Detail</h5>
-  </div>
-  <ul class="list-group list-group-flush">
-  <div id="books">
-  <% @books.each do |book| %>
+
+<div id="books">
+  <% @books.each do |books| %>
     <%= render book %>
-      <div class="card-body">
-   <%= link_to "New book", new_book_path %> |
-   <%= link_to "Show this book", book %> 
-  </div>
-    <% end %>
-    
+    <p>
+      <%= link_to "Show this Book", book %>
+    </p>
+  <% end %>
 </div>
-  </ul>
-</div>
-</div>
+
+<%= link_to "New Book", new_book_path %>
 </div>
